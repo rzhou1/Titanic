@@ -16,10 +16,48 @@
 
 #Explorotary data analysis (EDA)
 
-  EDA is the funniest part of building a model since it enables us to view the insight in a data set, detect outliers / anomalies, extract important variables, test underlying assumptions, etc. Here we try to demonstrate the EDA for this project.
+  EDA is the funniest part of building a model since it enables us to view the insight in a data set, detect outliers / anomalies, extract important variables, test underlying assumptions, etc. Here we will go through them step by step.
+   ![titanic_feature_distribution](https://user-images.githubusercontent.com/34787111/46991657-ae81bd00-d0bb-11e8-9729-442ba4c4ef07.png)
   
+  Figure 1. Statistical distribution of raw features.
+   
+  First, we check the statistical distribution of numerical features. As shown in Figure 1, most of the passengers are 20-40 years old with much less at age below 10 and above 50. The right skewed Fare distribution is somewhat consistent with Passengers' distribution over Pclass. Also, most passengers traveled alone and its frequency decays fast as family size increases.
+  ![titanic_feature_correlation](https://user-images.githubusercontent.com/34787111/46991656-ae81bd00-d0bb-11e8-9ef0-25358df2cf9a.png)
   
+  Figure 2. Correlation plot of features.
+  
+  Second, we are curious whether there are correlation among features. Machine learning models typically perform well with non-strong-correlated features. As shown in Figure 2, as expected, Fare and Pclass shows strong correlation.  Age and Pclass shows some correlation (the older the richer?). This can be confirmed by plotting Age vs. Pclass (or Age vs. Fare), which does show that overall older passengers have lower Pclass and higher Fare. In addition, Age shows correlation with FamilySize. By plotting Age vs FamilySize, it suggests that older passengers tend to travel alone while young passengers more likely travel with one or more family members. The correlation with Survived is the most important since we are predicting survival probability here. We will discuss it in detail later.
+  
+  ![titanic_categorical_feature_survival](https://user-images.githubusercontent.com/34787111/46991654-ade92680-d0bb-11e8-853e-83e74d0e4bbd.png)
+  
+  Figure 3. Correlation plots between categorical features and Survived from training dataset.
+  
+  Third, we start to explore feature correlation with class (survived). As shown in Figure 3 (top left), Female has 4 times higher survival rate than Male, suggesting that Sex is a very strong factor for predicting. Also, Pclass, regardless of Sex, shows strong correlation with survival rate. However, it is surprised that Embarked at #1 has higher survival rate for both male and female, which is against our intuition. In order to uncover this mystery, we plot Embarked vs Pclass (as shown in Figure 4). It clearly shows that there were more Pclass#1 passengers embarked at #1. Coupled with the above observations, we can safely conclude that it is non-uniform Pclass distrition among Embarked contributing to higher survival rate in Embarked#1.
+  
+    ![titanic_embarked_pclass](https://user-images.githubusercontent.com/34787111/46991655-ae81bd00-d0bb-11e8-9d8e-25e09d0c3cdc.png)
+  
+  Figure 4. Plot of Embarked vs Pclass.
+  
+  In addition, it seems that NameSuffix also has strong correlation with survival rate. What is insight behind it? Can you decouple it from Sex and reveal new insights? To answer these questions, we made a series of plots between NameSuffix and features (see Figure 5). NameSuffix 'Mr', 'Master' and 'Rare' were only given to male while 'Mrs' and 'Miss' to female. So why 'Master' and 'Rare' have higher survival rate than 'Mr'. 'Master' is in the youngest age group but unfavored in Pclass. However, 'Rare' generally has older age and the lowest Pclass. On the contrary, 'Mr' has the age in adult group, almost the highest Pclass and the lowest Fare, all these are not favored for survival (to be confirmed with Age vs Survival). 
+  
+  ![titanic_namesuffix](https://user-images.githubusercontent.com/34787111/46991658-ae81bd00-d0bb-11e8-8172-214b48eb4139.png)
+  
+  Figure 5. Plots of NameSuffix vs Sex, Age, Pclass and Fare.
+  
+  To date, we still have two numeric features to be explored against Survival. As shown in Figure 6, age lying at young group (<5) and senior group (>55) has higher survival rate, and the higher the Fare, the higher the survival rate.
+  
+![titanic_age_fare_survival](https://user-images.githubusercontent.com/34787111/46991653-ade92680-d0bb-11e8-8062-0ede0ecb5969.png)
+
+  Figure 6. Plots of numeric features vs Survived.
+  
+ To summarize, features Sex, Pclass / Fare (partly correlates each other), Age, and even NameSuffix (a hybrid feature containing Sex, Pclass, Fare, and Age) will make the most contribution in predicting probablity of survival.
+ 
 #Modeling
 
 #Summary
+
+
+
+
+
 
