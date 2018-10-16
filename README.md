@@ -1,8 +1,9 @@
 # Titanic: introduction on data preprocessing, exploratory data analysis, and modeling
 
-##This repo explores Titanic data for predicting survival of on-board passengers with particular focus on data preprocessing (eg. data imputer, feature extraction, etc.) and exploratory data analysis. Besides, we also demonstrate  first-level base estimators and second-level stacking models.
+#This repo explores Titanic data for predicting survival of on-board passengers with particular focus on data preprocessing (eg. data imputer, feature extraction, etc.) and exploratory data analysis. Besides, we also demonstrate  first-level base estimators and second-level stacking models.
 
 #Introduction
+
   Then "insinkable" Giantic ship Titanic hit icebery during her mainden voyage in 1912. Due to insufficient life boats, the tragedy led to massive claim of lives. Here we are challenged to build machine learning models to predict whether he/she can survive based on the data. The original data includes passengers' bio info (name, sex, age, SibSp, Parch) and travel info (carbin, embarked port, fare, ticket, pclass).
 
 #Data preprocessing
@@ -11,7 +12,7 @@
   
   Second, check the missing values. There are missing values from columns of Age, Cabin, Embarked, and Fare. However, here it should be careful that value "0" could be true for Age (baby less than 1 year old) but should be treated as missing value for Fare. Data imputer in columns with missing value is a pre-requisite for further processing.
   1). Since Fare is generally related to PClass, we can imputer the mean (or median) fare value of each class to the missing value of the respective class.
-  2). There are no clear and easy approach to imputer missing values of Cabin, Embarked and Age. We can try using machine learning models. Here we demostrate it by RandomForest.
+  2). There are no clear and easy approach to imputer missing values of Cabin, Embarked and Age. Here we demonstrate imputer of missing values by machine learning models. It should keep in mind that both train and test data should be imputered by the same dataset, namely, the same features, with machine learning models. Please refer to the code on how to implement it.
 
 #Explorotary data analysis (EDA)
 
