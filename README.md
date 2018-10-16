@@ -22,6 +22,7 @@
   Figure 1. Statistical distribution of raw features.
    
   First, we check the statistical distribution of numerical features. As shown in Figure 1, most of the passengers are 20-40 years old with much less at age below 10 and above 50. The right skewed Fare distribution is somewhat consistent with Passengers' distribution over Pclass. Also, most passengers traveled alone and its frequency decays fast as family size increases.
+  
   ![titanic_feature_correlation](https://user-images.githubusercontent.com/34787111/46991656-ae81bd00-d0bb-11e8-9ef0-25358df2cf9a.png)
   
   Figure 2. Correlation plot of features.
@@ -34,7 +35,7 @@
   
   Third, we start to explore feature correlation with class (survived). As shown in Figure 3 (top left), Female has 4 times higher survival rate than Male, suggesting that Sex is a very strong factor for predicting. Also, Pclass, regardless of Sex, shows strong correlation with survival rate. However, it is surprised that Embarked at #1 has higher survival rate for both male and female, which is against our intuition. In order to uncover this mystery, we plot Embarked vs Pclass (as shown in Figure 4). It clearly shows that there were more Pclass#1 passengers embarked at #1. Coupled with the above observations, we can safely conclude that it is non-uniform Pclass distrition among Embarked contributing to higher survival rate in Embarked#1.
   
-    ![titanic_embarked_pclass](https://user-images.githubusercontent.com/34787111/46991655-ae81bd00-d0bb-11e8-9d8e-25e09d0c3cdc.png)
+  ![titanic_embarked_pclass](https://user-images.githubusercontent.com/34787111/46991655-ae81bd00-d0bb-11e8-9d8e-25e09d0c3cdc.png)
   
   Figure 4. Plot of Embarked vs Pclass.
   
@@ -46,7 +47,7 @@
   
   To date, we still have two numeric features to be explored against Survival. As shown in Figure 6, age lying at young group (<5) and senior group (>55) has higher survival rate, and the higher the Fare, the higher the survival rate.
   
-![titanic_age_fare_survival](https://user-images.githubusercontent.com/34787111/46991653-ade92680-d0bb-11e8-8062-0ede0ecb5969.png)
+
 
   Figure 6. Plots of numeric features vs Survived.
   
