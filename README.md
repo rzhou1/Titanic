@@ -1,6 +1,6 @@
 # Titanic: introduction on data preprocessing, exploratory data analysis, feature engineering and modeling
 
-#This repo explores Titanic data for predicting survival of on-board passengers with particular focus on data preprocessing (eg. data imputer, feature extraction, etc.) and exploratory data analysis. Besides, we also demonstrate  first-level base estimators and second-level stacking models.
+#This repo explores Titanic data for predicting survival of on-board passengers with particular focus on data preprocessing (eg. data imputer, feature extraction, etc.), exploratory data analysis and feature engineering.
 
 #Introduction
 
@@ -62,7 +62,8 @@
   
 #Modeling
 
-#Summary
+  We trained the models with base estimators using the processed data. In general, the base models result in accuracy ~82-83% for the train data and ~80% for the test data.
+  
 
 
 
