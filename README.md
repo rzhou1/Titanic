@@ -1,5 +1,7 @@
 # Titanic: introduction on data preprocessing, exploratory data analysis, feature engineering and modeling
 
+(Titanic_offical.ipynb: step-by-step implementation; Titanic.py: standalone coding.)
+
 #This repo explores Titanic data for predicting survival of on-board passengers with particular focus on data preprocessing (eg. data imputer, feature extraction, etc.), exploratory data analysis and feature engineering.
 
 #Introduction
@@ -66,7 +68,7 @@
   
 #Summary
 
-  We demonstrated a comprehensive solution for the Titanic dataset. Our models predict that passengers from groups of Female, Child, Pclass_1 (the highest class), and Fare_Royal (the most expensive) have the highest survival probability while adult male has the lowest survival probability. At least partly, this dataset has told that one century ago the western world had a spirit of children and female priorities. Also, it shows that the nobles had their privileges.
+  We demonstrated a comprehensive solution for the Titanic dataset. Our models predict that Female, Children, and passengers from Pclass_1 (the highest class) and Fare_Royal (the most expensive) have the most likely to survive while adult male has the lowest survival probability. At least partly, this dataset has told us that one century ago the world had already had a societal norm of children and female priorities. Also, it reveals that the nobles had their privileges.
   
 
 
