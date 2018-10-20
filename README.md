@@ -62,7 +62,11 @@
   
 #Modeling
 
-  We trained the models with base estimators using the processed data. In general, the base models result in accuracy ~82-83% for the train data and ~80% for the test data.
+  We trained the models with base estimators using the processed data. In general, the base models result in accuracy ~82-83% for the train data and ~80% for the test data. We output feature importances from the base models, Sex, Age, Pclass and Fare are all among the top features of these models.
+  
+#Summary
+
+  We demonstrated a comprehensive solution for the Titanic dataset. Our models predict that passengers from groups of Female, Child, Pclass_1 (the highest class), and Fare_Royal (the most expensive) have the highest survival probability while adult male has the lowest survival probability. At least partly, this dataset has told that one century ago the western world had a spirit of children and female priorities. Also, it shows that the nobles had their privileges.
   
 
 
