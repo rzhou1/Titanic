@@ -1,6 +1,5 @@
 # Titanic: introduction on data preprocessing, exploratory data analysis, feature engineering and modeling
 
-(Titanic_offical.ipynb: step-by-step implementation; Titanic.py: standalone coding.)
 
 #This repo explores Titanic data for predicting survival of on-board passengers with particular focus on data preprocessing (eg. data imputer, feature extraction, etc.), exploratory data analysis and feature engineering.
 
