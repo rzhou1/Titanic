@@ -1,6 +1,5 @@
 # Titanic: introduction on data preprocessing, exploratory data analysis, feature engineering and modeling
 
-(Titanic_offical.ipynb: step-by-step implementation; Titanic.py: standalone coding.)
 
 #This repo explores Titanic data for predicting survival of on-board passengers with particular focus on data preprocessing (eg. data imputer, feature extraction, etc.), exploratory data analysis and feature engineering.
 
@@ -58,13 +57,13 @@
  
 #Feature engineering
 
-  Feature engineering bridges raw data with machine learning modeling and is essential for building an intelligent system. After data preprocessing and exploratory data analysis, we could come up with engineering features for modeling. As mentioned, here we created feature 'FamilySize' by combining SipSb and Parch, extracted feature 'NameSuffix' from passengers' name, and extracted feature 'Ticket1' from Ticket. 
+  Feature engineering bridges raw data with machine learning modeling and is essential for building an intelligent system. As mentioned, here we created feature 'FamilySize' by combining SipSb and Parch, extracted feature 'NameSuffix' from passengers' name. 
   
   As shown in EDA part, the statistical distribution of FamilySize and Fare are highly skewed. Here we introduce binning (quantization) to transforming these numeric features to categorical for eliminating potential adverse effect from extremely large / small values and/or extremely high / low frequencies in the original data. In addition, the distribution of Age is close to bell-shape. Here we statistically transform it to reduce its skewness. To date, we have data ready for machine learning modeling.
   
 #Modeling
 
-  We trained the models with base estimators using the processed data. In general, the base models result in accuracy ~82-83% for the train data and ~80% for the test data. We output feature importances from the base models, Sex, Age, Pclass and Fare are all among the top features of these models.
+  We trained the models with base estimators using the processed data. In general, the base models result in accuracy ~82-83% for the validation data and ~80% for the test data. The feature importances from the base models suggest that Sex, Age, Pclass and Fare are all among the top features of importance.
   
 #Summary
 
