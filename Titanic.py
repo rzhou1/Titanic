@@ -20,7 +20,7 @@ import lightgbm as lgb
 from lightgbm import LGBMClassifier
 import warnings
 warnings.filterwarnings('ignore')
-%matplotlib inline
+# %matplotlib inline
 
 ##Data loading
 def loadData():
@@ -147,27 +147,27 @@ class FeatureTransform(object):
     def __init__(self):
         pass
 
-    def _bin_fares(self, data):
+    def _binFares(self, data):
         bins = (0,7.9,14.4,31,1000)
         group_names=['Economy', 'Bussiness', 'Luxury', 'Royal']
         categories = pd.cut(data.Fare, bins, labels=group_names)
         data.Fare = categories
         return data
 
-    def _bin_familysize(self, data):
+    def _binFamilySize(self, data):
         bins = (0,1,2,4,11)
         group_names=['Alone', 'Couple', 'SmallFamily', 'LargeFamily']
         categories=pd.cut(data.FamilySize, bins, labels=group_names)
         data.FamilySize=categories
         return data
 
-    def _log_transform(self, data):
+    def _logTransform(self, data):
         log_transform_features = ['Age']    #to reduce data skewness.
         for feature in log_transform_features:
             data[feature] = np.log1p(data[feature])
         return data
 
-    def _categorical_encoding(self, data):
+    def _categoricalEncoding(self, data):
         data = data.drop(['Ticket', 'Name', 'SibSp', 'Parch', 'FirstName', 'LastName', 'Cabin'], axis=1)
         categorical_features = ['Embarked', 'NameSuffix']
         for feature in categorical_features:
@@ -176,10 +176,10 @@ class FeatureTransform(object):
         return data
 
     def transform(self, data):
-        data = self._bin_fares(data)
-        data = self._bin_familysize(data)
-        data = self._log_transform(data)
-        data = self._categorical_encoding(data)
+        data = self._binFares(data)
+        data = self._binFamilySize(data)
+        data = self._logTransform(data)
+        data = self._categoricalEncoding(data)
         return data
 
 
@@ -197,36 +197,36 @@ def dataSplit(data_all, data_train, test_size, random_state):
 
 
 ##Modeling
-def modeling(x_train, y_train, x_test, y_test, data_test, data_all):
+def modelBase(x_train, x_test, y_train, y_test, data_test, data_all):
     accuracy_dict = {}
     base_pred = []
     models = []
 
-    lr = LogisticRegression(C=1e3, penalty='l2', max_iter=100, fit_intercept=False, solver='liblinear', n_jobs=-1,
+    lr = LogisticRegression(C=1, penalty='l1', max_iter=50, fit_intercept=False, solver='liblinear', n_jobs=-1,
                             random_state=0)
-    dt = DecisionTreeClassifier(criterion='gini', max_depth=3, max_features=None, min_samples_split=3,
-                                min_samples_leaf=2,random_state=0)
-    rfc = RandomForestClassifier(n_estimators=100, max_depth=5, criterion='gini', max_features='sqrt',
-                                 min_samples_split=2,n_jobs=-1)
-    et = ExtraTreesClassifier(n_estimators=100, max_features='sqrt', max_depth=5, criterion='gini', random_state=0,
-                              n_jobs=-1)
-    gb = GradientBoostingClassifier(learning_rate=0.02, n_estimators=100, max_depth=3, max_features='auto',
-                                    min_samples_split=3, loss='deviance')
-    ada = AdaBoostClassifier(learning_rate=0.2, n_estimators=500, random_state=0)
+    dt = DecisionTreeClassifier(criterion='gini', max_depth=5, max_features='auto', min_samples_split=2,
+                                min_samples_leaf=2, random_state=0)
+    rfc = RandomForestClassifier(n_estimators=50, max_depth=5, criterion='gini', max_features='sqrt',
+                                 min_samples_split=5, n_jobs=-1)
+    et = ExtraTreesClassifier(n_estimators=100, max_features='sqrt', max_depth=5, min_samples_split=2, criterion='gini',
+                              random_state=0, n_jobs=-1)
+    gb = GradientBoostingClassifier(learning_rate=0.1, n_estimators=50, max_depth=3, max_features='sqrt',
+                                    min_samples_split=2, loss='deviance')
+    ada = AdaBoostClassifier(learning_rate=0.1, n_estimators=100, random_state=0)
     svc = SVC(kernel='rbf', gamma='auto', C=1)
-    xgbc = xgb.XGBClassifier(base_score=0.5, max_depth=2, learning_rate=0.6, n_estimators=1000,
-                             objective='binary:logistic',booster='gbtree', reg_alpha=0.2, reg_lambda=1, random_state=0)
-    lgb = lgb.LGBMClassifier(boosting_type='gbdt', learning_rate=0.1, max_depth=3, min_child_samples=2,
-                             n_estimators=100,objective='binary', random_state=0)
+    xgbc = xgb.XGBClassifier(base_score=0.5, max_depth=3, learning_rate=0.1, n_estimators=50,
+                             objective='binary:logistic', booster='gbtree', reg_alpha=0.3, reg_lambda=1, random_state=0)
+    lgbc = lgb.LGBMClassifier(boosting_type='gbdt', learning_rate=0.01, max_depth=5, min_child_samples=5,
+                              n_estimators=100, objective='binary', random_state=0)
 
-    classifiers_base = [lr, dt, rfc, et, gb, ada, svc, xgbc, lgb]
+    classifiers_base = [lr, dt, rfc, et, gb, ada, svc, xgbc, lgbc]
 
     classifiers_name = ['LogisticRegression', 'DecisionTree', 'RandomForest', 'ExtraTree', 'GradientBoosting',
                         'AdaBoost', 'SVM', 'XGBoost', 'LightGBM']
 
     for i in range(len(classifiers_base)):
         model = classifiers_base[i]
-        model = model.fit(x_train,y_train)
+        model.fit(x_train, y_train)
         models.append(model)
         y_hat = model.predict(x_test)
         accuracy_dict[classifiers_name[i]] = accuracy_score(y_test, y_hat)
@@ -235,9 +235,11 @@ def modeling(x_train, y_train, x_test, y_test, data_test, data_all):
 
     base_pred.append(data_all.iloc[m_train:, 1])
     base_pred = pd.DataFrame(data=base_pred).T
-    base_pred = base_pred.rename(columns={0: 'Logistic', 1: 'DecisionTree', 2: 'RandomForest', 3: 'ExtraTree',4: 'GradientBoost',
-                                          5: 'AdaBoost', 6: 'SVM', 7: 'XGBoost', 8: 'LightGBM',9: 'PassengerId'})
+    base_pred = base_pred.rename(columns={0: 'Logistic', 1: 'DecisionTree', 2: 'RandomForest', 3: 'ExtraTree',
+                                          4: 'GradientBoost', 5: 'AdaBoost', 6: 'SVM', 7: 'XGBoost', 8: 'LightGBM',
+                                          9: 'PassengerId'})
     return accuracy_dict, base_pred, models
+
 
 ##What features are important from the models?
 def featureImportances(models):
@@ -259,7 +261,7 @@ if __name__ == "__main__":
     data_all = Imputer().imputer(data_all)
     data_all = FeatureTransform().transform(data_all)
     x_train, x_test, y_train, y_test, data_test = dataSplit(data_all, data_train, test_size=0.3, random_state=0)
-    base_accuracy, base_pred, models = modeling(x_train, x_test, y_train, y_test, data_test, data_all)
+    base_accuracy, base_pred, models = modelBase(x_train, x_test, y_train, y_test, data_test, data_all)
     feature_importance = featureImportances(models)
 
     print base_accuracy
