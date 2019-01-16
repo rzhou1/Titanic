@@ -63,11 +63,11 @@
   
 #Modeling
 
-  We trained the models with base estimators using the processed data. In general, the base models result in accuracy ~82-83% for the validation data and ~80% for the test data. The feature importances from the base models suggest that Sex, Age, Pclass and Fare are all among the top features of importance.
+  We trained the models with base estimators using the processed data. In general, the base models generalize well, resulting in similar accuracy for validation and test. The feature importances from the trained models suggest that Sex, Age, Pclass and Fare are all among the top features of importance.
   
 #Summary
 
-  We demonstrated a comprehensive solution for the Titanic dataset. Our models predict that Female, Children, and passengers from Pclass_1 (the highest class) and Fare_Royal (the most expensive) have the most likely to survive while adult male has the lowest survival probability. At least partly, this dataset has told us that one century ago the world had already had a societal norm of children and female priorities. Also, it reveals that the nobles had their privileges.
+  We demonstrated a solution for the Titanic dataset. Our models predict that Female, Children, and passengers from Pclass_1 (the highest class) and Fare_Royal (the most expensive) have the most likely to survive while adult male has the lowest survival probability. At least partly, this dataset has told us that one century ago the world had already had a societal norm of children and female priorities in front of a disaster.
   
 
 
