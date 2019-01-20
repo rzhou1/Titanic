@@ -13,12 +13,11 @@
   
   Second, check the missing values. There are missing values from columns of Age, Cabin, Embarked, and Fare. However, here it should be careful that value "0" could be true for Age (baby less than 1 year old) but should be treated as missing value for Fare. Data imputer in columns with missing value is a pre-requisite for further processing.
   1). Since Fare is generally related to PClass, we can imputer the mean (or median) fare value of each class to the missing value of the respective class.
-  2). There are no clear and easy approach to imputer missing values of Cabin, Embarked and Age. Here we demonstrate imputer of missing values by machine learning models. It should keep in mind that both train and test data should be imputered by the same dataset, namely, the same features, with machine learning models. Please refer to the code on how to implement it.
-  3). 
+  2). There are no clear and easy approach to imputer missing values of Cabin, Embarked and Age. Here we demonstrate imputer of missing values by machine learning models. It should keep in mind that both train and test data should be imputered by the same dataset, namely, the same features, with machine learning models.
 
 #Explorotary data analysis (EDA)
 
-  EDA is the funniest part of building a model since it enables us to view the insight in a data set, detect outliers / anomalies, extract important variables, test underlying assumptions, etc. Here we will go through them step by step.
+  EDA is the funniest part of building a model since we could view the insight in a data set, detect outliers / anomalies, extract important variables, test underlying assumptions, etc. Here we will go through them step by step.
    ![titanic_feature_distribution](https://user-images.githubusercontent.com/34787111/46991657-ae81bd00-d0bb-11e8-9729-442ba4c4ef07.png)
   
   Figure 1. Statistical distribution of raw features.
@@ -41,29 +40,29 @@
 
   Figure 4. Plot of Embarked vs Pclass.
   
-  In addition, it seems that NameSuffix also has strong correlation with survival rate. What is insight behind it? Can you decouple it from Sex and reveal new insights? To answer these questions, we made a series of plots between NameSuffix and features (see Figure 5). NameSuffix 'Mr', 'Master' and 'Rare' were only given to male while 'Mrs' and 'Miss' to female. So why 'Master' and 'Rare' have higher survival rate than 'Mr'. 'Master' is in the youngest age group but unfavored in Pclass. However, 'Rare' generally has older age and the lowest Pclass. On the contrary, 'Mr' has the age in adult group, almost the highest Pclass and the lowest Fare, all these are not favored for survival (to be confirmed with Age vs Survival). 
+  In addition, it shows that NameSuffix also has strong correlation with survival rate. What is insight behind it? Can we decouple it from Sex and reveal new insights? To answer these questions, we made a series of plots between NameSuffix and features (see Figure 5). NameSuffix 'Mr', 'Master' and 'Rare' were only given to male while 'Mrs' and 'Miss' are given to female. So why 'Master' and 'Rare' have higher survival rate than 'Mr'. 'Master' is in the youngest age group but unfavored in Pclass. However, 'Rare' generally has older age and the most royal Pclass. On the contrary, 'Mr' has the age in adult group, almost the least royal Pclass and the lowest Fare, all these are not favored for survival (to be confirmed with Age vs Survival). 
   
   ![titanic_namesuffix](https://user-images.githubusercontent.com/34787111/46991658-ae81bd00-d0bb-11e8-8172-214b48eb4139.png)
   
   Figure 5. Plots of NameSuffix vs Sex, Age, Pclass and Fare.
   
-  To date, we still have two numeric features to be explored against Survival. As shown in Figure 6, age lying at baby group (<5) has the highest survival rate; and the survival rate also show linear relationship with binned fare categories.
+  To date, we still have two numeric features to be explored against Survival. As shown in Figure 6, age lying at baby group (<5) has the highest survival rate; and the survival rate shows linear relationship with binned fare categories.
   
 ![titanic_age_fare_survival](https://user-images.githubusercontent.com/34787111/47059646-2238ce00-d17f-11e8-847a-618024345d82.png)
 
   Figure 6. Plots of numeric features vs Survived.
  
- To summarize, features Sex, Pclass / Fare (partly correlates each other), Age, and even NameSuffix (a hybrid feature containing Sex, Pclass, Fare, and Age) will make the most contribution in predicting probablity of survival.
+ Thus, we hypothesize that features Sex, Pclass / Fare (partly correlates each other), Age, and even NameSuffix (a hybrid feature containing Sex, Pclass, Fare, and Age) will make most of the contributions in predicting probablity of survival.
  
 #Feature engineering
 
   Feature engineering bridges raw data with machine learning modeling and is essential for building an intelligent system. As mentioned, here we created feature 'FamilySize' by combining SipSb and Parch, extracted feature 'NameSuffix' from passengers' name. 
   
-  As shown in EDA part, the statistical distribution of FamilySize and Fare are highly skewed. Here we introduce binning (quantization) to transforming these numeric features to categorical for eliminating potential adverse effect from extremely large / small values and/or extremely high / low frequencies in the original data. In addition, the distribution of Age is close to bell-shape. Here we statistically transform it to reduce its skewness. To date, we have data ready for machine learning modeling.
+  As shown in EDA part, the statistical distribution of FamilySize and Fare are highly skewed. Here we introduce binning (quantization) to transforming these numeric features to categorical for eliminating potential adverse effect from extremely large / small values and/or extremely high / low frequencies in the original data. In addition, the distribution of Age is close to bell-shape. Here we statistically transform it to reduce its skewness. So far we have data ready to feed to machine learning models.
   
 #Modeling
 
-  We trained the models with base estimators using the processed data. In general, the base models generalize well, resulting in similar accuracy for validation and test. The feature importances from the trained models suggest that Sex, Age, Pclass and Fare are all among the top features of importance.
+  We trained the models with base estimators using the processed data. The base models generalize very well, and test accuracy from Kaggle public is well aligned with validation accuracy. The feature importances from the models suggest that Sex, Age, Pclass and Fare are all among the top features of importance, in well agreement with our hypothesis.
   
 #Summary
 
